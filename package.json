@@ -1,0 +1,16 @@
+{
+  "name": "scifi-reviews",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "ethereumjs-testrpc": "^4.0.1",
+    "truffle": "^3.4.7"
+  },
+  "scripts": {
+    "testrpc": "testrpc",
+    "truffle:compile": "truffle compile",
+    "truffle:migrate": "truffle migrate",
+    "truffle:test": "truffle test"
+  }
+}
