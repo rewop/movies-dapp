@@ -11,6 +11,7 @@
     "testrpc": "testrpc",
     "truffle:compile": "truffle compile",
     "truffle:migrate": "truffle migrate",
-    "truffle:test": "truffle test"
+    "truffle:test": "truffle test",
+    "truffle:deploy": "truffle deploy"
   }
 }
