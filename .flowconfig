@@ -1,0 +1,13 @@
+[ignore]
+migrations
+contracts
+
+[include]
+src/app/*\.js
+
+[libs]
+
+[lints]
+
+[options]
+module.file_ext=.js
