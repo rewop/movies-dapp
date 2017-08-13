@@ -2,6 +2,8 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import type { State, Movie } from '../flowtypes/store';
+import { getMovies } from '../selectors';
+import MovieList from '../components/MovieList';
 
 type MoviesProps = {
   movies: Array<Movie>,
@@ -18,20 +20,14 @@ class Movies extends Component {
     return (
       <div>
         <h2>Movies</h2>
-        <ul>
-          {this.props.movies.map(movie =>
-            (<li key={movie.title}>
-              {movie.title}
-            </li>),
-          )}
-        </ul>
+        <MovieList movies={this.props.movies} />
       </div>
     );
   }
 }
 
 const mapStateToProps = (state: State): MoviesProps => ({
-  movies: state.movies,
+  movies: getMovies(state),
 });
 
 export default connect(mapStateToProps)(Movies);
