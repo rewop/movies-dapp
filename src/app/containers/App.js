@@ -6,6 +6,7 @@ class App extends PureComponent {
       <div>
         <h1>Here we go</h1>
         <p>Soon to be arrived</p>
+        {/* <Movies /> */}
       </div>
     );
   }

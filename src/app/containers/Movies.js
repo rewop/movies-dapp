@@ -1,13 +1,23 @@
 /* @flow */
+import { compose } from 'ramda';
+import React, { Component } from 'react';
 
-import React, { PureComponent } from 'react';
-import withServices from '../services/withServices';
-
-class Movies extends PureComponent {
-  componentDidMount() {
-    this.props.services.movies.getMovies();
+class Movies extends Component {
+  render() {
+    console.log(this.props.store.movieStore.movies);
+    return (
+      <div>
+        <h2>Movies</h2>
+        <ul>
+          {this.props.store.movieStore.movies.map(movie =>
+            (<li>
+              {movie.title}
+            </li>),
+          )}
+        </ul>
+      </div>
+    );
   }
-  render() {}
 }
 
-export default withServices(Movies);
+export default Movies;
