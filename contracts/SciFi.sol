@@ -15,4 +15,12 @@ contract SciFi {
     }
     bids[name] += msg.value;
   }
+
+  function getMovies() returns (bytes32[]) {
+    bytes32[] memory resultMovies = new bytes32[](movie_num);
+    for (uint i = 0; i < movie_num; i++) {
+      resultMovies[i] = movies[i];
+    }
+    return resultMovies;
+  }
 }
