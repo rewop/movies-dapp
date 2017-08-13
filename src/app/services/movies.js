@@ -12,7 +12,6 @@ import type {
 export default function create(): MoviesService {
   let web3Provider;
   let myWeb3;
-  let SciFiContract;
 
   if (typeof web3 !== 'undefined') {
     web3Provider = web3.currentProvider;
@@ -23,46 +22,38 @@ export default function create(): MoviesService {
     myWeb3 = new Web3(web3Provider);
   }
 
-  SciFiContract = contract(abiSciFi);
+  const SciFiContract = contract(abiSciFi);
   SciFiContract.setProvider(web3Provider);
 
-  console.log('abiSciFi', abiSciFi);
-  console.log('contract', SciFiContract);
-  console.log(myWeb3);
-  console.log(Web3);
-  console.log(web3);
   return {
     getMovies: async (): Promise<MoviesServiceGetMoviesResponse> => {
       try {
         const instance = await SciFiContract.deployed();
         const movies = await instance.getMovies.call();
-        console.log('movies', movies);
         const parsedMovies = movies.map(movie => ({
           title: myWeb3.toAscii(movie).replace(/\0/g, ''),
         }));
-
-        console.log('parsedMovies', parsedMovies);
-
         return parsedMovies;
       } catch (err) {
         console.log('Error getting movies', err);
+        throw err;
       }
     },
     voteMovie: async ({ title }: Movie): Promise<MoviesServiceVoteMovieResponse> => {
       try {
         const instance = await SciFiContract.deployed();
-        debugger;
         const transaction = await instance.vote(myWeb3.toHex(title), {
           from: myWeb3.eth.accounts[0],
           value: myWeb3.toWei(0.00002, 'ether'),
         });
-        console.log('transaction', transaction);
+        console.log('Vote succeeded. Transaction:', transaction);
 
         return {
           title,
         };
       } catch (err) {
         console.log('Error voring movie', err);
+        throw err;
       }
     },
   };
