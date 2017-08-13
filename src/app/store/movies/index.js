@@ -2,14 +2,23 @@
 import R from 'ramda';
 import type { MoviesState } from '../../flowtypes/store';
 import type { ActionLoadMovieSuccess } from '../../actions/loadMovies';
-import { LOAD_MOVIES_SUCCESS } from '../../constants/Actions';
+import type { ActionVoteMovieSuccess } from '../../actions/voteMovie';
+import { LOAD_MOVIES_SUCCESS, VOTE_MOVIE_SUCCESS } from '../../constants/Actions';
 
-type MovieStateAction = ActionLoadMovieSuccess;
+type MovieStateAction = ActionLoadMovieSuccess | ActionVoteMovieSuccess;
 
 export default (state: MoviesState = [], action: MovieStateAction): MoviesState => {
   switch (action.type) {
     case LOAD_MOVIES_SUCCESS: {
       return action.payload;
+    }
+    case VOTE_MOVIE_SUCCESS: {
+      (action: ActionVoteMovieSuccess);
+      const movie = state.find(m => m.title === action.payload.title);
+      if (movie) {
+        return state;
+      }
+      return [...state, action.payload];
     }
     default: {
       return state;

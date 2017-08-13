@@ -1,5 +1,7 @@
-/* @flow */
-import { reduxForm } from 'redux-form';
+import R from 'ramda';
+import { reduxForm, reset } from 'redux-form';
+import { connect } from 'react-redux';
+import voteMovie from '../actions/voteMovie';
 import MovieForm from '../components/MovieForm';
 
 type MovieFormValues = {
@@ -18,11 +20,14 @@ const validateForm = (values: MovieFormValues): MovieFormValidationErrors => {
   return errors;
 };
 
-export default reduxForm({
-  form: 'newMovie',
-  fields: ['title'],
-  validate: validateForm,
-  onSubmit: (values) => {
-    console.log('submitting value', values);
-  },
-})(MovieForm);
+export default R.compose(
+  connect(null, {
+    onSubmit: voteMovie,
+    onSubmitSuccess: () => reset('newMovie'),
+  }),
+  reduxForm({
+    form: 'newMovie',
+    fields: ['title'],
+    validate: validateForm,
+  }),
+)(MovieForm);

@@ -2,19 +2,20 @@
 import { LOAD_MOVIES_START, LOAD_MOVIES_SUCCESS, LOAD_MOVIES_ERROR } from '../constants/Actions';
 import type { Services, MoviesServiceGetMoviesResponse } from '../flowtypes/services';
 
-export type ActionLoadMoviesStart = {
+export type ActionLoadMoviesStart = {|
   type: LOAD_MOVIES_START,
-};
+|};
 
-export type ActionLoadMovieSuccess = {
+export type ActionLoadMovieSuccess = {|
   type: LOAD_MOVIES_SUCCESS,
   payload: MoviesServiceGetMoviesResponse,
-};
+|};
 
-export type ActionLoadMovieError = {
+export type ActionLoadMovieError = {|
   type: LOAD_MOVIES_ERROR,
   payload: Error,
-};
+  error: true,
+|};
 
 export const loadMoviesStart = (): ActionLoadMoviesStart => ({
   type: LOAD_MOVIES_START,
@@ -30,6 +31,7 @@ export const loadMoviesSuccess = (
 export const loadMoviesError = (err: Error): ActionLoadMovieError => ({
   type: LOAD_MOVIES_ERROR,
   payload: err,
+  error: true,
 });
 
 export default () => async (

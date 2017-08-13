@@ -9,6 +9,7 @@ export type Movie = {
 };
 
 export type MoviesServiceGetMoviesResponse = Array<Movie>;
+export type MoviesServiceVoteMovieResponse = Movie;
 
 export type ServicesConfig = {
   web3Host: string,
