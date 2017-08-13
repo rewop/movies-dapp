@@ -4,6 +4,12 @@ export type MoviesService = {
   voteMovie: Function,
 };
 
+export type Movie = {
+  title: string,
+};
+
+export type MoviesServiceGetMoviesResponse = Array<Movie>;
+
 export type ServicesConfig = {
   web3Host: string,
 };

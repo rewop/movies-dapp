@@ -7,7 +7,6 @@ class App extends PureComponent {
     return (
       <div>
         <MovieForm />
-        <p>Soon to be arrived</p>
         <Movies />
       </div>
     );
