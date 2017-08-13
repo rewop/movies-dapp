@@ -31,6 +31,8 @@
     "react": "^15.6.1",
     "react-display-name": "^0.2.3",
     "react-dom": "^15.6.1",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2",
     "regenerator-runtime": "^0.10.5",
     "truffle": "^3.4.7",
     "web3": "1.0.0-beta.17",

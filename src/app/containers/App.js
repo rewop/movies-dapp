@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import Movies from './Movies';
 
 class App extends PureComponent {
   render() {
@@ -6,7 +7,7 @@ class App extends PureComponent {
       <div>
         <h1>Here we go</h1>
         <p>Soon to be arrived</p>
-        {/* <Movies /> */}
+        <Movies />
       </div>
     );
   }
