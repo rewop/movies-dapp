@@ -1,32 +1,32 @@
-import createMovies from "./movies";
-import Web3 from "web3";
+import Web3 from 'web3';
+import createMovies from './movies';
 
-jest.mock("web3");
+jest.mock('web3');
 
-describe("services/movies", () => {
+describe('services/movies', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
-  it("createMovies", () => {
-    expect(typeof createMovies).toBe("function");
+  it('createMovies', () => {
+    expect(typeof createMovies).toBe('function');
   });
-  it("should create the Movies service", () => {
+  it('should create the Movies service', () => {
     const config = {
-      web3Host: "web3Host"
+      web3Host: 'web3Host',
     };
-    const moviesService = createMovies(config);
+    createMovies(config);
 
     expect(Web3.providers.HttpProvider).toHaveBeenCalledWith(config.web3Host);
   });
 
-  it("should return the api", () => {
+  it('should return the api', () => {
     const config = {
-      web3Host: "web3Host"
+      web3Host: 'web3Host',
     };
     const moviesService = createMovies(config);
 
-    ["getMovies", "voteMovie"].forEach(method => {
-      expect(typeof moviesService[method]).toBe("function");
+    ['getMovies', 'voteMovie'].forEach((method) => {
+      expect(typeof moviesService[method]).toBe('function');
     });
   });
 });
