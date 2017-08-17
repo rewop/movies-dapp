@@ -1,6 +1,7 @@
 /* @flow */
 import React from 'react';
 import { render } from 'react-dom';
+import './utils/normalizeStyle';
 import Root from './Root';
 import createStore from './store';
 import createServices from './services';

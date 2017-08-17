@@ -15,6 +15,10 @@ export default {
         loader: 'babel-loader',
         exclude: /node_modules/,
       },
+      {
+        test: /\.css$/,
+        loaders: ['to-string-loader', 'css-loader'],
+      },
     ],
   },
   plugins: [

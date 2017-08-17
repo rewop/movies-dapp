@@ -6,6 +6,7 @@ import React, { Component } from 'react';
 import type { State, Movie } from '../flowtypes/store';
 import { getMovies, getIsMoviesLoading, getIsMoviesLoaded } from '../selectors';
 import MovieList from '../components/MovieList';
+import MoviesEmpty from '../components/MoviesEmpty';
 import loadMovies from '../actions/loadMovies';
 
 type StateToProps = {
@@ -28,6 +29,7 @@ class Movies extends Component {
   };
 
   componentDidMount() {
+    console.log('handleLoadMovies');
     this.props.handleLoadMovies();
   }
 
@@ -39,10 +41,13 @@ class Movies extends Component {
     if (!isLoaded && !isLoading) {
       return null;
     }
+
+    console.log(movies.length, isLoaded);
     return (
       <div>
         <h2>Movies</h2>
-        {isLoaded && <MovieList movies={movies} />}
+        {isLoaded && movies.length > 0 && <MovieList movies={movies} />}
+        {isLoaded && movies.length <= 0 && <MoviesEmpty />}
         {isLoading && <p>...</p>}
       </div>
     );
