@@ -11,5 +11,4 @@ const config = createConfig();
 const reactContainer = document.getElementById('react-container');
 
 const services = createServices(config.services);
-console.log('services', services);
 render(<Root store={createStore(undefined, services)} />, reactContainer);

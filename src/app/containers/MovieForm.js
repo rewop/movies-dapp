@@ -32,7 +32,6 @@ const MovieFormCardContainer = ({
   />);
 
 const validateForm = (values: MovieFormValues): MovieFormValidationErrors => {
-  console.log('values', values);
   const errors: MovieFormValidationErrors = {};
   if (!values.title) {
     errors.title = 'Title is missing';

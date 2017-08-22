@@ -39,7 +39,6 @@ export default (payload: Movie) => async (
   _: Function,
   { services: { movies } }: { services: Services },
 ) => {
-  console.log('voteMovie');
   dispatch(voteMovieStart(payload));
   try {
     const newMovie = await movies.voteMovie(payload);

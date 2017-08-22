@@ -1,6 +1,7 @@
 /* @flow */
 export type Movie = {
   title: string,
+  score: string,
 };
 
 export type MoviesServiceGetMoviesResponse = Array<Movie>;
