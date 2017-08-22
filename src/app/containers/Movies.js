@@ -77,7 +77,6 @@ class Movies extends Component {
 
     return (
       <div>
-        <h2>SciFi Movies</h2>
         {isLoaded &&
           movies.length > 0 &&
           <MovieList movies={movies} onShowAddMovie={this.handleToggleShowAddMovie} />}
