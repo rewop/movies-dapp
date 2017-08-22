@@ -1,5 +1,4 @@
 /* @flow */
-import R from 'ramda';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
@@ -7,7 +6,9 @@ import type { State, Movie } from '../flowtypes/store';
 import { getMovies, getIsMoviesLoading, getIsMoviesLoaded } from '../selectors';
 import MovieList from '../components/MovieList';
 import MoviesEmpty from '../components/MoviesEmpty';
+import MovieForm from './MovieForm';
 import loadMovies from '../actions/loadMovies';
+import voteMovie from '../actions/voteMovie';
 
 type StateToProps = {
   movies: Array<Movie>,
@@ -17,9 +18,14 @@ type StateToProps = {
 
 type DispatchToProps = {
   handleLoadMovies: Function,
+  handleVoteMovie: Function,
 };
 
 type MoviesProps = StateToProps & DispatchToProps;
+
+type MoviesContainerState = {
+  isAddingMovie: Boolean,
+};
 
 class Movies extends Component {
   static deafultProps = {
@@ -28,26 +34,56 @@ class Movies extends Component {
     isLoaded: false,
   };
 
+  constructor(props: MoviesProps) {
+    super(props);
+
+    this.state = {
+      isAddingMovie: false,
+    };
+  }
+
+  state: MoviesContainerState;
+
   componentDidMount() {
-    console.log('handleLoadMovies');
     this.props.handleLoadMovies();
   }
 
   props: MoviesProps;
 
+  handleToggleShowAddMovie = () => {
+    this.setState((state: MoviesContainerState) => ({
+      isAddingMovie: !state.isAddingMovie,
+    }));
+  };
+  handleVoteMovie = async (...args) => {
+    const { handleVoteMovie } = this.props;
+    await handleVoteMovie(...args);
+    this.handleToggleShowAddMovie();
+  };
+
   render() {
     const { isLoading, isLoaded, movies } = this.props;
+    const { isAddingMovie } = this.state;
 
     if (!isLoaded && !isLoading) {
       return null;
     }
 
-    console.log(movies.length, isLoaded);
+    if (isAddingMovie) {
+      return (
+        <MovieForm onCancel={this.handleToggleShowAddMovie} onAddMovie={this.handleVoteMovie} />
+      );
+    }
+
     return (
       <div>
-        <h2>Movies</h2>
-        {isLoaded && movies.length > 0 && <MovieList movies={movies} />}
-        {isLoaded && movies.length <= 0 && <MoviesEmpty />}
+        <h2>SciFi Movies</h2>
+        {isLoaded &&
+          movies.length > 0 &&
+          <MovieList movies={movies} onShowAddMovie={this.handleToggleShowAddMovie} />}
+        {isLoaded &&
+          movies.length <= 0 &&
+          <MoviesEmpty onShowAddMovie={this.handleToggleShowAddMovie} />}
         {isLoading && <p>...</p>}
       </div>
     );
@@ -64,6 +100,7 @@ const mapDispatchToProps = (dispatch: Function): DispatchToProps =>
   bindActionCreators(
     {
       handleLoadMovies: loadMovies,
+      handleVoteMovie: voteMovie,
     },
     dispatch,
   );

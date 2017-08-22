@@ -1,8 +1,8 @@
+import React from 'react';
 import R from 'ramda';
 import { reduxForm, reset } from 'redux-form';
 import { connect } from 'react-redux';
-import voteMovie from '../actions/voteMovie';
-import MovieForm from '../components/MovieForm';
+import MovieFormCard from '../components/MovieFormCard';
 
 type MovieFormValues = {
   title: string,
@@ -12,7 +12,27 @@ type MovieFormValidationErrors = {
   title?: string,
 };
 
+type MovieFormCardContainerProps = {
+  handleSubmit: Function,
+  onAddMovie: Function,
+  onCancel: Function,
+  submitting: Boolean,
+};
+
+const MovieFormCardContainer = ({
+  handleSubmit,
+  onAddMovie,
+  onCancel,
+  submitting,
+}: MovieFormCardContainerProps) =>
+  (<MovieFormCard
+    onAddMovie={handleSubmit(onAddMovie)}
+    onCancel={onCancel}
+    isSubmitting={submitting}
+  />);
+
 const validateForm = (values: MovieFormValues): MovieFormValidationErrors => {
+  console.log('values', values);
   const errors: MovieFormValidationErrors = {};
   if (!values.title) {
     errors.title = 'Title is missing';
@@ -22,7 +42,6 @@ const validateForm = (values: MovieFormValues): MovieFormValidationErrors => {
 
 export default R.compose(
   connect(null, {
-    onSubmit: voteMovie,
     onSubmitSuccess: () => reset('newMovie'),
   }),
   reduxForm({
@@ -30,4 +49,4 @@ export default R.compose(
     fields: ['title'],
     validate: validateForm,
   }),
-)(MovieForm);
+)(MovieFormCardContainer);

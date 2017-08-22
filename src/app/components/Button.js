@@ -16,6 +16,7 @@ const Button = styled.button`
   line-height: 1.42857143;
   border-radius: 4px;
   user-select: none;
+
   &:active,
   &:hover {
     outline: 0;
@@ -38,10 +39,19 @@ const Button = styled.button`
       background-color: #2089c9;
       border-color: #1b74aa;
     }
-  `};
-  ${({ lg }) =>
-    lg &&
-    `
+  `} ${({ secondary }) =>
+      secondary &&
+      `
+    color: #666666;
+    background-color: transparent;
+    border-color: none;
+  `} ${({ circle }) =>
+      circle &&
+      `
+    border-radius: 99%;
+  `} ${({ lg }) =>
+      lg &&
+      `
     padding: 10px 16px;
     font-size: 18px;
     line-height: 1.3333333;

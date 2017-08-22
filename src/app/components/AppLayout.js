@@ -18,6 +18,8 @@ const AppInnerContainer = styled.div`
   padding: 20px;
 `;
 
+// http://rawgit.com/start-react/ani-theme/master/build/index.html#/dashboard/overview
+
 const AppLayout = ({ children }: { children: any }) =>
   (<AppContainer>
     <AppInnerContainer>
