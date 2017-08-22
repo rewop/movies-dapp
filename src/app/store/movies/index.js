@@ -7,10 +7,13 @@ import { LOAD_MOVIES_SUCCESS, VOTE_MOVIE_SUCCESS } from '../../constants/Actions
 
 type MovieStateAction = ActionLoadMovieSuccess | ActionVoteMovieSuccess;
 
+const sortAscending = R.sortBy(R.compose(parseFloat, R.prop('score')));
+const sortMovies = R.compose(R.reverse, sortAscending);
+
 export default (state: MoviesState = [], action: MovieStateAction): MoviesState => {
   switch (action.type) {
     case LOAD_MOVIES_SUCCESS: {
-      return action.payload;
+      return sortMovies(action.payload);
     }
     case VOTE_MOVIE_SUCCESS: {
       (action: ActionVoteMovieSuccess);
@@ -18,7 +21,7 @@ export default (state: MoviesState = [], action: MovieStateAction): MoviesState 
       if (movie) {
         return state;
       }
-      return [...state, action.payload];
+      return sortMovies([...state, action.payload]);
     }
     default: {
       return state;
