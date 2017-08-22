@@ -16,7 +16,7 @@ const MovieList = ({ movies, onShowAddMovie }: { movies: MoviesState, onShowAddM
     />
     {movies.map((movie, index) =>
       (<List.Item key={movie.title}>
-        {`${index + 1}. ${movie.title}`}
+        {`${index + 1}. ${movie.title} (${movie.score} ETH)`}
       </List.Item>),
     )}
   </List>);

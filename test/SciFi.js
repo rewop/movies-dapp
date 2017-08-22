@@ -60,13 +60,22 @@ contract('SciFi', (accounts) => {
   });
   it('should return the list of all the voted movies', async () => {
     const sciFi = await SciFi.deployed();
-    const movies = await sciFi.getMovies.call();
+    const [movies, votes] = await sciFi.getMovies.call();
+    movies.forEach((movie, index) => {
+      console.log(typeof web3.fromWei(votes[index]).toString());
+      console.log({
+        name: web3.toAscii(movie).replace(/\0/g, ''),
+        vote: web3.fromWei(votes[index]).toString(),
+      });
+    });
     assert.equal(movies.length, 1);
+    assert.equal(votes.length, 1);
     const storedMovie = web3.toAscii(movies[0]).replace(/\0/g, '');
     assert.equal(
       storedMovie,
       movieAddedInTheContract,
       'We should be able to retrieve only the added movies',
     );
+    assert(votes[0] > 0, 'the movie should have positive vote');
   });
 });

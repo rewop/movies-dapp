@@ -28,11 +28,16 @@ export default function create(): MoviesService {
   return {
     getMovies: async (): Promise<MoviesServiceGetMoviesResponse> => {
       try {
+        console.log(1);
         const instance = await SciFiContract.deployed();
-        const movies = await instance.getMovies.call();
-        const parsedMovies = movies.map(movie => ({
+        console.log(2);
+        const [movies, votes] = await instance.getMovies.call();
+        console.log(3, movies, votes);
+        const parsedMovies = movies.map((movie, i) => ({
           title: myWeb3.toAscii(movie).replace(/\0/g, ''),
+          score: myWeb3.fromWei(votes[i]).toString(),
         }));
+        console.log('parsedMovies', parsedMovies);
         return parsedMovies;
       } catch (err) {
         console.log('Error getting movies', err);
@@ -48,9 +53,15 @@ export default function create(): MoviesService {
         });
         console.log('Vote succeeded. Transaction:', transaction);
 
-        return {
+        const newScore = await instance.bids.call(myWeb3.toHex(title));
+
+        const result = {
           title,
+          score: myWeb3.fromWei(newScore).toString(),
         };
+        console.log('result', result);
+
+        return result;
       } catch (err) {
         console.log('Error voring movie', err);
         throw err;
