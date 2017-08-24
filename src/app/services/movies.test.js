@@ -1,7 +1,28 @@
 import Web3 from 'web3';
+import contract from 'truffle-contract';
 import createMovies from './movies';
 
-jest.mock('web3');
+jest.mock('web3', () => {
+  class Web3Mock {
+    static providers = {
+      HttpProvider: jest.fn(),
+    };
+  }
+
+  return Web3Mock;
+});
+
+jest.mock('truffle-contract', () => {
+  const instance = {
+    getMovies: {
+      call: jest.fn(),
+    },
+  };
+  return jest.fn(() => ({
+    setProvider: jest.fn(),
+    deployed: jest.fn(() => Promise.resolve()),
+  }));
+});
 
 describe('services/movies', () => {
   beforeEach(() => {

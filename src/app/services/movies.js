@@ -9,7 +9,9 @@ import type {
   MoviesServiceVoteMovieResponse,
 } from '../flowtypes/services';
 
-export default function create(): MoviesService {
+export default function create(
+  { web3Host = 'http://localhost:8545' }: { web3Host: string } = {},
+): MoviesService {
   let web3Provider;
   let myWeb3;
 
@@ -18,7 +20,7 @@ export default function create(): MoviesService {
     myWeb3 = new Web3(web3Provider);
   } else {
     // we try to use localhost
-    web3Provider = new Web3.providers.HttpProvider('http://localhost:8545');
+    web3Provider = new Web3.providers.HttpProvider(web3Host);
     myWeb3 = new Web3(web3Provider);
   }
 
